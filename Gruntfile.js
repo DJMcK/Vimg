@@ -4,7 +4,7 @@ module.exports = function (Grunt) {
 	Grunt.initConfig({
 		pkg: Grunt.file.readJSON('package.json')
 
-		, banner: '/*! <%= pkg.name %> | v<%= pkg.version %> | Author: <%= pkg.author %> | <%= pkg.repository %> | MIT license */ \n'
+		, banner: '/*! <%= pkg.name %> | v<%= pkg.version %> | Author: <%= pkg.author %> | <%= pkg.repository %> | <%= pkg.license %> license */ \n'
 
 		, jshint: {
 			options: {
@@ -40,5 +40,6 @@ module.exports = function (Grunt) {
 	Grunt.registerTask('default', [
 		'jshint'
 		, 'concat'
+		, 'uglify'
 	]);
 }
