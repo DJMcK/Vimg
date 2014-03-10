@@ -1,0 +1,27 @@
+{
+  "name": "Vimg",
+  "version": "0.1.0",
+  "description": "Vimg - simple JavaScript image lazy loader.",
+  "main": "Gruntfile.js",
+  "repository": "https://github.com/ScottishDave/Vimg",
+  "directories": {
+    "example": "example"
+  },
+  "keywords": [
+    "Image",
+    "lazyload",
+    "javascript"
+  ],
+  "author": "David McKeown",
+  "license": "ISC",
+  "devDependencies": {
+    "matchdep": "~0.3.0",
+    "grunt": "~0.4.3",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "~0.4.0"
+  },
+  "peerDependencies": {
+    "grunt-cli": "*"
+  }
+}
