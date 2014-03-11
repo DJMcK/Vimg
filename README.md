@@ -1,5 +1,7 @@
 # Vimg.js
 
+[![Build Status](https://travis-ci.org/ScottishDave/Vimg.png?branch=master)](https://travis-ci.org/ScottishDave/Vimg)
+
 Vimg is a lightweight JavaScript image lazy-loader.
 
 To use Vimg:
@@ -10,9 +12,9 @@ To use Vimg:
 <script src="dist/vimg.min.js"></script>
 <script>
 new Vimg({
-	selector: '.vimg' // note: this could be [data-vimg]
-	, interval: 3000  // default: 1000 - how often will be poll for changes
-	, offset: 500 // default: 300 - how far below viewport to load
+    selector: '.vimg' // note: this could be [data-vimg]
+    , interval: 3000  // default: 1000 - how often will be poll for changes
+    , offset: 500 // default: 300 - how far below viewport to load
 })
 </script>
 ```
