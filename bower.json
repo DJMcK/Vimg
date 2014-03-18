@@ -1,0 +1,26 @@
+{
+  "name": "vimg",
+  "version": "0.1.0",
+  "homepage": "https://github.com/ScottishDave/Vimg",
+  "authors": [
+    "ScottishDave <david.j.mckeown@us.pwc.com>"
+  ],
+  "description": "JavaScript image lazy loader",
+  "keywords": [
+    "image",
+    "lazyload",
+    "vimg"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test/libs",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "qunit": "~1.14.0"
+  }
+}
