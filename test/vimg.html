@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Basic Test Suite</title>
+    <!-- Load local QUnit. -->
+    <link rel="stylesheet" href="libs/qunit/qunit/qunit.css" media="screen">
+    <script src="libs/qunit/qunit/qunit.js"></script>
+    <script src="../src/vimg.js"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <img src="blank.gif" data-src="hello.jpg" class="vimg" id="right-away">
+        <img src="blank.gif" data-src="hello.jpg" class="vimg" id="display-none" style="display: none;">
+
+        <img src="blank.gif" data-src="hello.jpg" class="vimg" id="event-emitter" style="position: absolute; margin-top: 300%;">
+    </div>
+
+
+    <div id="qunit"></div>
+    <div id="qunit-fixture">this had better work.</div>
+
+
+    <!-- Load local lib and tests. -->
+    <script src="test.js"></script>
+</body>
+</html>

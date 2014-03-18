@@ -1,45 +1,54 @@
 'use strict';
 
 module.exports = function (Grunt) {
-	Grunt.initConfig({
-		pkg: Grunt.file.readJSON('package.json')
+    Grunt.initConfig({
+        pkg: Grunt.file.readJSON('package.json')
 
-		, banner: '/*! <%= pkg.name %> | v<%= pkg.version %> | Author: <%= pkg.author %> | <%= pkg.repository %> | <%= pkg.license %> license */ \n'
+        , banner: '/*! <%= pkg.name %> | v<%= pkg.version %> | Author: <%= pkg.author %> | <%= pkg.repository %> | <%= pkg.license %> license */ \n'
 
-		, jshint: {
-			options: {
-				jshintrc: '.jshintrc'
-			}
-			, files: 'src/Vimg.js'
-		}
+        , jshint: {
+            options: {
+                jshintrc: '.jshintrc'
+            }
+            , files: 'src/Vimg.js'
+        }
 
-		, concat: {
-			options: {
-				banner: '<%= banner %>'
-			}
-			, dist: {
-				src: 'src/Vimg.js'
-				, dest: 'dist/vimg.js'
-			}
-		}
+        , concat: {
+            options: {
+                banner: '<%= banner %>'
+            }
+            , dist: {
+                src: 'src/Vimg.js'
+                , dest: 'dist/vimg.js'
+            }
+        }
 
-		, uglify: {
-			options: {
-				banner: '<%= banner %>'
-			}
-			, dist: {
-				src: 'dist/vimg.js'
-				, dest: 'dist/vimg.min.js'
-			}
-		}
+        , uglify: {
+            options: {
+                banner: '<%= banner %>'
+            }
+            , dist: {
+                src: 'dist/vimg.js'
+                , dest: 'dist/vimg.min.js'
+            }
+        }
 
-	})
+        , qunit: {
+            all: ['test/*.html']
+        }
 
-	require('matchdep').filterDev('grunt-*').forEach(Grunt.loadNpmTasks);
+    })
 
-	Grunt.registerTask('default', [
-		'jshint'
-		, 'concat'
-		, 'uglify'
-	]);
+    require('matchdep').filterDev('grunt-*').forEach(Grunt.loadNpmTasks);
+
+    Grunt.registerTask('default', [
+        'jshint'
+        , 'concat'
+        , 'uglify'
+    ]);
+
+    Grunt.registerTask('test', [
+        'jshint'
+        , 'qunit'
+    ]);
 }
