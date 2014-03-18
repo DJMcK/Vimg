@@ -24,7 +24,7 @@
             ```
 
             Example:
-            ``` 
+            ```
             new Vimg({...});
             ```
 
@@ -53,15 +53,16 @@
             this.pollNodes();
 
             return {
-                poll: this.pollNodes
+                poll: function() { return self.pollNodes(true); }
               , images: this.nodes
+              , internals: this
             };
         }
 
         /*
             ### listen
-            
-            Binds up base events for afterwhich we would like to poll 
+
+            Binds up base events for afterwhich we would like to poll
             for any images now being in the view.
 
             @returns {Number} `setInterval` identifier
@@ -88,11 +89,11 @@
             @params {Object} Node to attach event to.
             @params {String} Event to listen for.
         */
-        Vimg.prototype.subscribeEvent = function(node, event) {
+        Vimg.prototype.subscribeEvent = function(node, event, callback) {
             if (doc.addEventListener) {
-                return node.addEventListener(event, this.shouldPoll, false);
+                return node.addEventListener(event, callback, false);
             } else {
-                return node.attachEvent('on'+event, this.shouldPoll);
+                return node.attachEvent('on'+event, callback);
             }
         };
 
@@ -105,11 +106,11 @@
             @params {Object} Node to attach event to.
             @params {String} Event to listen for.
         */
-        Vimg.prototype.unsubscribeEvent = function(node, event) {
+        Vimg.prototype.unsubscribeEvent = function(node, event, callback) {
             if (doc.removeEventListener) {
-                return node.removeEventListener(event, this.shouldPoll, false);
+                return node.removeEventListener(event, callback, false);
             } else {
-                return node.detachEvent('on'+event, this.shouldPoll);
+                return node.detachEvent('on'+event, callback);
             }
         };
 
@@ -125,8 +126,16 @@
             @params {String} Event to be mitted.
         */
         Vimg.prototype.emitEvent = function(node, event) {
-            var e = new Event(event);
-            return node.dispatchEvent(e);
+            var ev;
+
+            if( document.createEvent ) {
+                ev = document.createEvent('MouseEvents');
+                ev.initEvent( event, true, false );
+                return node.dispatchEvent( ev );
+            } else if( document.createEventObject ) {
+                ev = document.createEventObject();
+                return node.fireEvent( event, ev );
+            }
         };
 
         /*
@@ -156,10 +165,10 @@
 
             @returns {Array} All nodes (if any) still being tracked.
         */
-        Vimg.prototype.pollNodes = function() {
+        Vimg.prototype.pollNodes = function(direct) {
             var me;
 
-            if (internals._shouldPoll && self.nodes.length > 0) {
+            if ((internals._shouldPoll || direct) && self.nodes.length > 0) {
                 for (var i = 0; i < self.nodes.length; i++) {
                     me = self.nodes[i];
 
@@ -192,6 +201,7 @@
         */
         Vimg.prototype.withinView = function(node) {
             var coords = node.getBoundingClientRect();
+            if (node.style.display === 'none') { return false; }
             return ((coords.top >= 0 && coords.left >= 0 && coords.top) <=
                 (window.innerHeight || document.documentElement.clientHeight) +
                 this.options.offset);
