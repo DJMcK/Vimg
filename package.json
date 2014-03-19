@@ -1,6 +1,6 @@
 {
   "name": "Vimg",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Vimg - simple JavaScript image lazy loader.",
   "main": "Gruntfile.js",
   "repository": "https://github.com/ScottishDave/Vimg",
