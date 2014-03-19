@@ -10,7 +10,7 @@ module.exports = function (Grunt) {
             options: {
                 jshintrc: '.jshintrc'
             }
-            , files: 'src/Vimg.js'
+            , files: 'src/*.js'
         }
 
         , concat: {
