@@ -42,7 +42,7 @@ module.exports = function (Grunt) {
     require('matchdep').filterDev('grunt-*').forEach(Grunt.loadNpmTasks);
 
     Grunt.registerTask('default', [
-        'jshint'
+        'test'
         , 'concat'
         , 'uglify'
     ]);
