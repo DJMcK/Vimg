@@ -43,7 +43,6 @@ test('EventEmitter; should emit default event vimg-loaded on switch', function (
         evented = false;
 
     vimg.internals.subscribeEvent(ee, 'vimg-loaded', function() {
-        console.log('event fired');
         evented = true;
     });
 
@@ -54,3 +53,33 @@ test('EventEmitter; should emit default event vimg-loaded on switch', function (
 
     ok(evented === true, 'Evented should equal true after poll.');
 });
+
+test('subscribeEvent & emitEvent; direct method tests.', function () {
+    var body = document.getElementsByTagName('body')[0];
+
+    var callback = function (e) {
+        ok(e, 'Event subsriber received event');
+    }
+
+    vimg.internals.subscribeEvent(body, 'testEvent', callback);
+
+    var emitter = vimg.internals.emitEvent(body, 'testEvent');
+
+    ok(emitter, 'Emitter returned true');
+});
+
+test('shouldPoll; should return true on call', function () {
+    ok(vimg.internals.shouldPoll() === true, 'Method returns boolean true value.');
+});
+
+test('pollNodes; should return to use an array of nodes', function () {
+    var poll = vimg.internals.pollNodes(true);
+
+    ok(poll instanceof Array, 'An array is returned from method.');
+});
+
+
+
+
+
+
