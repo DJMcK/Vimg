@@ -12,9 +12,10 @@ To use Vimg:
 <script src="dist/vimg.min.js"></script>
 <script>
 new Vimg({
-    selector: '.vimg' // note: this could be [data-vimg]
+    selector: '.vimg' // note: could be equal to [data-src] or your custom srcAttr
     , interval: 3000  // default: 1000 - how often will be poll for changes
     , offset: 500 // default: 300 - how far below viewport to load
+    , srcAttr: 'data-reallyTheSrc' // default: data-src - how far below viewport to load
 })
 </script>
 ```
@@ -34,6 +35,12 @@ Each image will emit an event when it is loaded into the view.
 Default: `.vimg`
 
 Used in `document.querySelectorAll` to return all nodes from selector. A simpler implementation can be to simply look for `[data-src]` removing the need for a class.
+
+#### srcAttr
+
+Default: `data-src`
+
+The `src` path for your image asset. You could match this with selector to remove any additional effort.
 
 #### interval
 

@@ -41,6 +41,7 @@
             this.options.selector = this.options.selector || '.vimg';
             this.options.interval = parseInt(this.options.interval) || 1000;
             this.options.offset = parseInt(this.options.offset) || 300;
+            this.options.srcAttr = this.options.srcAttr || 'data-src';
             internals.nodes = doc.querySelectorAll(this.options.selector);
             this.nodes = [];
             for (var i = 0; i < internals.nodes.length; i++) {
@@ -173,7 +174,7 @@
                     me = self.nodes[i];
 
                     if (me && self.withinView(me)) {
-                        me.src = me.getAttribute('data-src');
+                        me.src = me.getAttribute(this.options.srcAttr);
                         self.emitEvent(me, 'vimg-loaded');
                         delete self.nodes[i];
                     }
@@ -210,11 +211,6 @@
         return Vimg;
     })();
 
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        module.exports = Vimg;
-    } else if (typeof define === 'function' && define.amd) {
-        define(function () { return Vimg; });
-    } else if (typeof window === 'object') {
-        window.Vimg = Vimg;
-    }
+    window.Vimg = Vimg;
+    return Vimg;
 }).call(this, window, document);

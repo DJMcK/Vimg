@@ -4,7 +4,7 @@ var vimg = new Vimg({
         , interval: 3000  // default: 1000 - how often will be poll for changes
         , offset: 500 // default: 300 - how far below viewport to load
     })
-  , images = document.getElementsByTagName('img');
+  , images = document.getElementsByClassName('vimg');
 
 test('new Vimg({...})', function () {
     ok(typeof vimg == 'object', 'should return an object');
@@ -78,7 +78,22 @@ test('pollNodes; should return to use an array of nodes', function () {
     ok(poll instanceof Array, 'An array is returned from method.');
 });
 
+test('srcAttr; should be able to set custom attribute for source', function () {
+    var otherSrc = new Vimg({
+        selector: '[data-othersrc]'
+        , interval: 3000
+        , offset: 500
+        , srcAttr: 'data-othersrc'
+    }),
+    img = otherSrc.images[0];
 
+    img.style.display = 'block';
+
+    otherSrc.poll();
+
+    equal(img.getAttribute('data-othersrc'), img.getAttribute('src'),
+        'othersrc-src and src should now be equal after changing display.');
+});
 
 
 
