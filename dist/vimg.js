@@ -1,4 +1,4 @@
-/*! Vimg | v0.2.0 | Author: David McKeown | https://github.com/ScottishDave/Vimg | MIT license */ 
+/*! Vimg | v1.0.0 | Author: David McKeown | https://github.com/ScottishDave/Vimg | MIT license */ 
 (function (global, document, undefined) {
     'use strict';
 
