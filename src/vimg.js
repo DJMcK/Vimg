@@ -74,7 +74,10 @@
             this.subscribeEvent(win, 'load', this.shouldPoll);
 
             this.throttled = setInterval(
-                this.pollNodes,this.options.interval
+                (function(_this) {
+                    return _this.pollNodes;
+                })(this)
+                , this.options.interval
             );
 
             return this.throttled;
@@ -174,18 +177,18 @@
                     me = self.nodes[i];
 
                     if (me && self.withinView(me)) {
-                        me.src = me.getAttribute(this.options.srcAttr);
+                        me.src = me.getAttribute(self.options.srcAttr);
                         self.emitEvent(me, 'vimg-loaded');
-                        delete self.nodes[i];
+                        self.arrayRemove(self.nodes, i);
                     }
                 }
 
                 internals._shouldPoll = false;
             } else if (self.nodes.length === 0) {
-                this.unsubscribeEvent(win, 'scroll', this.shouldPoll);
-                this.unsubscribeEvent(win, 'resize', this.shouldPoll);
-                this.unsubscribeEvent(win, 'load', this.shouldPoll);
-                clearInterval(this.throttled);
+                self.unsubscribeEvent(win, 'scroll', self.shouldPoll);
+                self.unsubscribeEvent(win, 'resize', self.shouldPoll);
+                self.unsubscribeEvent(win, 'load', self.shouldPoll);
+                clearInterval(self.throttled);
             }
 
             return self.nodes;
@@ -206,6 +209,23 @@
             return ((coords.top >= 0 && coords.left >= 0 && coords.top) <=
                 (window.innerHeight || document.documentElement.clientHeight) +
                 this.options.offset);
+        };
+
+        /*
+            ### arrayRemove
+
+            Array Remove - By John Resig (MIT Licensed)
+            Removes a single or group of items from an array.
+
+            @params {Object} Our array.
+            @params {Int} From, or single item
+            @params {Int} To, optional
+            @returns {Object} Updated array
+         */
+        Vimg.prototype.arrayRemove = function(array, from, to) {
+            var rest = array.slice((to || from) + 1 || array.length);
+            array.length = from < 0 ? array.length + from : from;
+            return array.push.apply(array, rest);
         };
 
         return Vimg;

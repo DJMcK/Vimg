@@ -9,7 +9,7 @@ var vimg = new Vimg({
 test('new Vimg({...})', function () {
     ok(typeof vimg == 'object', 'should return an object');
 
-    ok(vimg.images.length === images.length, 'should find all relevant images.');
+    ok(vimg.images.length === images.length-1, 'should find all relevant images except for our right-away item.');
 
     ok(typeof vimg.poll === 'function', 'poll method should be exposed.');
 });
