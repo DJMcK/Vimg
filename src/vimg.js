@@ -171,6 +171,9 @@
         */
         Vimg.prototype.pollNodes = function(direct) {
             var me;
+            var count = self.nodes.reduce(function(prev, curr) {
+                return typeof curr !== "undefined" ? prev+1 : prev;
+            }, 0);
 
             if ((internals._shouldPoll || direct) && self.nodes.length > 0) {
                 for (var i = 0; i < self.nodes.length; i++) {
@@ -179,12 +182,14 @@
                     if (me && self.withinView(me)) {
                         me.src = me.getAttribute(self.options.srcAttr);
                         self.emitEvent(me, 'vimg-loaded');
-                        self.arrayRemove(self.nodes, i);
+                        delete self.nodes[i];
                     }
                 }
 
                 internals._shouldPoll = false;
-            } else if (self.nodes.length === 0) {
+            }
+
+            if (count === 0) {
                 self.unsubscribeEvent(win, 'scroll', self.shouldPoll);
                 self.unsubscribeEvent(win, 'resize', self.shouldPoll);
                 self.unsubscribeEvent(win, 'load', self.shouldPoll);
@@ -209,23 +214,6 @@
             return ((coords.top >= 0 && coords.left >= 0 && coords.top) <=
                 (window.innerHeight || document.documentElement.clientHeight) +
                 this.options.offset);
-        };
-
-        /*
-            ### arrayRemove
-
-            Array Remove - By John Resig (MIT Licensed)
-            Removes a single or group of items from an array.
-
-            @params {Object} Our array.
-            @params {Int} From, or single item
-            @params {Int} To, optional
-            @returns {Object} Updated array
-         */
-        Vimg.prototype.arrayRemove = function(array, from, to) {
-            var rest = array.slice((to || from) + 1 || array.length);
-            array.length = from < 0 ? array.length + from : from;
-            return array.push.apply(array, rest);
         };
 
         return Vimg;
