@@ -1,3 +1,4 @@
 node_modules/
 example/
 test/libs
+.DS_Store
