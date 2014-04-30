@@ -1,3 +1,4 @@
+/* jshint bitwise: false */
 (function (global, document, undefined) {
     'use strict';
 
@@ -170,8 +171,10 @@
             @returns {Array} All nodes (if any) still being tracked.
         */
         Vimg.prototype.pollNodes = function(direct) {
-            var me;
-            var count = self.nodes.reduce(function(prev, curr) {
+            var me
+                , count = self.nodes.length;
+
+            count = self.nodes.reduce(function(prev, curr) {
                 return typeof curr !== "undefined" ? prev+1 : prev;
             }, 0);
 
@@ -215,6 +218,79 @@
                 (window.innerHeight || document.documentElement.clientHeight) +
                 this.options.offset);
         };
+
+        /*
+            ### Array.pototype.reduce
+
+            Extends the native `Array` prototype to include `reduce`
+            if it does not exist. Fixes older IE, hopefully this can be
+            removed soon!
+         */
+        if ( 'function' !== typeof Array.prototype.reduce ) {
+            Array.prototype.reduce = function(callbackfn /*, initialValue */) {
+
+                // step 1
+                if (this === null) {
+                    throw new TypeError("can't convert " + this + " to object");
+                }
+                var O = Object(this);
+
+                // steps 2 & 3
+                var len = O.length >>> 0;
+
+                // step 4
+                if (typeof callbackfn !== "function") {
+                    throw new TypeError(
+                        callbackfn + " is not a function");
+                }
+
+                // step 5
+                if (len === 0 && arguments.length < 2) {
+                    throw new TypeError(
+                        'reduce of empty array with no initial value');
+                }
+
+                // step 6
+                var k = 0;
+
+                // step 7
+                var accumulator;
+                if (arguments.length > 1) {
+                    accumulator = arguments[1];
+                }
+                // step 8
+                else {
+                    var kPresent = false;
+                    while ((!kPresent) && (k < len)) {
+                        kPresent = k in O;
+                        if (kPresent) {
+                            accumulator = O[k];
+                        }
+                        k++;
+                    }
+                    if (!kPresent) {
+                        throw new TypeError(
+                            'reduce of empty array with no initial value');
+                    }
+                }
+
+                // step 9
+                while (k < len) {
+                    if (k in O) {
+                        accumulator = callbackfn.call(
+                            undefined
+                            , accumulator
+                            , O[k]
+                            , k
+                            , O);
+                    }
+                    k++;
+                }
+
+                // step 10
+                return accumulator;
+            };
+        }
 
         return Vimg;
     })();
