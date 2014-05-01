@@ -139,7 +139,10 @@
                 return node.dispatchEvent( ev );
             } else if( document.createEventObject ) {
                 ev = document.createEventObject();
-                return node.fireEvent( event, ev );
+                try {
+                    return node.fireEvent( event, ev );
+                }
+                catch(e) { console.log(e); }
             }
         };
 
