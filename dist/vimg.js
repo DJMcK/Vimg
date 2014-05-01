@@ -143,7 +143,7 @@
                 try {
                     return node.fireEvent( event, ev );
                 }
-                catch(e) { console.log(e); }
+                catch(e) {}
             }
         };
 
