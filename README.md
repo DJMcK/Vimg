@@ -14,8 +14,8 @@ To use Vimg:
 new Vimg({
     selector: '.vimg' // note: could be equal to [data-src] or your custom srcAttr
     , interval: 3000  // default: 1000 - how often will be poll for changes
-    , offset: 500 // default: 300 - how far below viewport to load
-    , srcAttr: 'data-reallyTheSrc' // default: data-src - how far below viewport to load
+    , offset: 500 // default: 300 - how far below the viewport to load
+    , srcAttr: 'data-reallyTheSrc' // default: data-src - attribute containing the src
 })
 </script>
 ```
